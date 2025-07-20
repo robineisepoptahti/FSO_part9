@@ -10,6 +10,7 @@
     "calculateExercises": "ts-node exerciseCalculator.ts",
     "dev": "ts-node-dev index.ts",
     "start": "ts-node index.ts",
+    "endpoint": "ts-node exercisesEndpoint.ts",
     "lint": "eslint ."
   },
   "author": "",
