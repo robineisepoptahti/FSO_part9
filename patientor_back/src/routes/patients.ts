@@ -11,7 +11,6 @@ router.get("/", (_req, res: Response<FilteredPatient[]>) => {
 });
 
 router.post("/", (req, res: Response<Patient>) => {
-  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   const NewPatient: NewPatient = toNewPatient(req.body);
   const addedPatient: Patient = service.addPatient(NewPatient);
   console.log(addedPatient);
