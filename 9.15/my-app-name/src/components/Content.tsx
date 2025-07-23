@@ -1,25 +1,11 @@
-interface CoursePart {
-  name: string;
-  exerciseCount: number;
-}
-
-interface ContentProps {
-  courseParts: CoursePart[];
-}
+import Part from "./Part";
+import type { ContentProps } from "../types";
 
 const Content = (props: ContentProps) => {
-  const { courseParts } = props;
+  const { coursePart } = props;
   return (
     <div>
-      <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
-      </p>
+      <Part coursePart={coursePart}></Part>
     </div>
   );
 };
