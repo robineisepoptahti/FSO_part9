@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <div>
-      <InputForm></InputForm>
+      <InputForm setEntries={setEntries}></InputForm>
       <DiaryEntries entries={entries}></DiaryEntries>
     </div>
   );

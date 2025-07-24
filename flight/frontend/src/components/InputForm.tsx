@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { create } from "../services/FlightService";
-import type { Weather, Visibility, postDiaryEntry } from "../types";
+import type { Weather, Visibility, postDiaryEntry, DiaryEntry } from "../types";
 
-const InputForm = () => {
+const InputForm = ({
+  setEntries,
+}: {
+  setEntries: React.Dispatch<React.SetStateAction<DiaryEntry[]>>;
+}) => {
   const [date, setDate] = useState("");
   const [visibility, setVisibility] = useState("");
   const [weather, setWeather] = useState("");
@@ -16,7 +20,7 @@ const InputForm = () => {
     }, 5000);
   };
 
-  const saveEntry = (event: React.SyntheticEvent) => {
+  const saveEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const toSend: postDiaryEntry = {
       date: date,
@@ -24,7 +28,10 @@ const InputForm = () => {
       weather: weather as Weather,
       comment: comment,
     };
-    create(toSend, errorAlert);
+    const newEntry = await create(toSend, errorAlert);
+    if (newEntry) {
+      setEntries((state) => [...state, newEntry]);
+    }
     setDate("");
     setVisibility("");
     setComment("");
@@ -34,20 +41,97 @@ const InputForm = () => {
   return (
     <div>
       <div style={{ color: "red" }}>{errorMsg}</div>
-      <h1>Add new entry</h1>
+      <h2>Add new entry</h2>
       <form onSubmit={saveEntry}>
         Date
-        <input value={date} onChange={(event) => setDate(event.target.value)} />
-        <br />
-        Visibility
         <input
-          value={visibility}
+          type="date"
+          min="2000-01-01"
+          max="2050-12-31"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+        />
+        <br />
+        Visibility great
+        <input
+          name="visibility"
+          type="radio"
+          id="great"
+          value="great"
+          checked={visibility === "great"}
+          onChange={(event) => setVisibility(event.target.value)}
+        />{" "}
+        good
+        <input
+          name="visibility"
+          type="radio"
+          id="good"
+          value="good"
+          checked={visibility === "good"}
+          onChange={(event) => setVisibility(event.target.value)}
+        />{" "}
+        ok
+        <input
+          name="visibility"
+          type="radio"
+          id="ok"
+          value="ok"
+          checked={visibility === "ok"}
+          onChange={(event) => setVisibility(event.target.value)}
+        />{" "}
+        poor
+        <input
+          name="visibility"
+          type="radio"
+          id="poor"
+          value="poor"
+          checked={visibility === "poor"}
           onChange={(event) => setVisibility(event.target.value)}
         />
         <br />
-        Weather
+        Weather sunny
         <input
-          value={weather}
+          name="weather"
+          type="radio"
+          id="sunny"
+          value="sunny"
+          checked={weather === "sunny"}
+          onChange={(event) => setWeather(event.target.value)}
+        />
+        rainy
+        <input
+          name="weather"
+          type="radio"
+          id="rainy"
+          value="rainy"
+          checked={weather === "rainy"}
+          onChange={(event) => setWeather(event.target.value)}
+        />
+        cloudy
+        <input
+          name="weather"
+          type="radio"
+          id="cloudy"
+          value="cloudy"
+          checked={weather === "cloudy"}
+          onChange={(event) => setWeather(event.target.value)}
+        />
+        stormy
+        <input
+          name="weather"
+          type="radio"
+          id="stormy"
+          value="stormy"
+          checked={weather === "stormy"}
+          onChange={(event) => setWeather(event.target.value)}
+        />
+        windy
+        <input
+          name="weather"
+          type="radio"
+          id="windy"
+          value="windy"
+          checked={weather === "windy"}
           onChange={(event) => setWeather(event.target.value)}
         />
         <br />
@@ -58,6 +142,8 @@ const InputForm = () => {
         />
         <br />
         <button type="submit">add</button>
+        <br />
+        <br />
       </form>
     </div>
   );

@@ -5,6 +5,7 @@ const DiaryEntries = (props: DiaryProp) => {
 
   return (
     <div>
+      <h2>Diary Entries</h2>
       {entries.map((e) => (
         <div>
           <b>{e.date}</b>
