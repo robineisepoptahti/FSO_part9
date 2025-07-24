@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { create } from "../services/FlightService";
+import type { Weather, Visibility, postDiaryEntry } from "../types";
 
 const InputForm = () => {
   const [date, setDate] = useState("");
@@ -8,6 +10,17 @@ const InputForm = () => {
 
   const saveEntry = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    const toSend: postDiaryEntry = {
+      date: date,
+      visibility: visibility as Visibility,
+      weather: weather as Weather,
+      comment: comment,
+    };
+    create(toSend);
+    setDate("");
+    setVisibility("");
+    setComment("");
+    setWeather("");
   };
 
   return (

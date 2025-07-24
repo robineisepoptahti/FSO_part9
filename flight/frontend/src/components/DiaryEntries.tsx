@@ -6,7 +6,7 @@ const DiaryEntries = (props: DiaryProp) => {
   return (
     <div>
       {entries.map((e) => (
-        <div key={e.id}>
+        <div>
           <b>{e.date}</b>
           <br />
           <p>Visibility: {e.visibility}</p>
