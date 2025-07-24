@@ -1,13 +1,13 @@
 import express from "express";
 import { Response } from "express";
 import service from "../services/patientService";
-import { FilteredPatient, NewPatient, Patient } from "../types";
+import { NonSensitivePatient, NewPatient, Patient } from "../types";
 import toNewPatient from "../utils";
 import * as z from "zod";
 
 const router = express.Router();
 
-router.get("/", (_req, res: Response<FilteredPatient[]>) => {
+router.get("/", (_req, res: Response<NonSensitivePatient[]>) => {
   res.send(service.getFilteredEntries());
 });
 
@@ -24,6 +24,10 @@ router.post("/", (req, res) => {
       res.status(400).send({ error: "unknown error" });
     }
   }
+});
+
+router.get("/:id", (req, res) => {
+  res.send(service.getOne(req.params.id));
 });
 
 export default router;
