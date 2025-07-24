@@ -7,6 +7,14 @@ const InputForm = () => {
   const [visibility, setVisibility] = useState("");
   const [weather, setWeather] = useState("");
   const [comment, setComment] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const errorAlert = (error: string) => {
+    setErrorMsg(error);
+    setTimeout(() => {
+      setErrorMsg("");
+    }, 5000);
+  };
 
   const saveEntry = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -16,7 +24,7 @@ const InputForm = () => {
       weather: weather as Weather,
       comment: comment,
     };
-    create(toSend);
+    create(toSend, errorAlert);
     setDate("");
     setVisibility("");
     setComment("");
@@ -25,6 +33,7 @@ const InputForm = () => {
 
   return (
     <div>
+      <div style={{ color: "red" }}>{errorMsg}</div>
       <h1>Add new entry</h1>
       <form onSubmit={saveEntry}>
         Date

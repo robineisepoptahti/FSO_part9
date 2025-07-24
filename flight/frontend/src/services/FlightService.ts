@@ -7,8 +7,18 @@ export const getAll = () => {
     .then((response) => response.data);
 };
 
-export const create = (entry: postDiaryEntry) => {
+export const create = (
+  entry: postDiaryEntry,
+  errorAlert: (error: string) => void
+) => {
   return axios
     .post<postDiaryEntry>("http://localhost:3000/api/diaries", entry)
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((error: unknown) => {
+      if (axios.isAxiosError(error) && error.response !== undefined) {
+        const errorDetails = `${JSON.stringify(error.response.data)}
+        `;
+        errorAlert(errorDetails);
+      } else errorAlert("Error: not axios related error");
+    });
 };
