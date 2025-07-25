@@ -1,3 +1,7 @@
+export interface PatientListProp {
+  patientList: Patient[];
+}
+
 export interface Diagnosis {
   code: string;
   name: string;
@@ -7,7 +11,7 @@ export interface Diagnosis {
 export enum Gender {
   Male = "male",
   Female = "female",
-  Other = "other"
+  Other = "other",
 }
 
 export interface Patient {
