@@ -5,8 +5,8 @@ export interface PatientListProp {
 export interface PatientProp {
   patient: Patient;
 }
-export interface EntryListProp {
-  patient: Entry[];
+export interface EntryProp {
+  entry: Entry;
 }
 
 export interface Diagnosis {
@@ -56,17 +56,17 @@ interface SickLeave {
   endDate: string;
 }
 
-interface HealthCheckEntry extends BaseEntry {
+export interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
   healthCheckRating: HealthCheckRating;
 }
 
-interface HospitalEntry extends BaseEntry {
+export interface HospitalEntry extends BaseEntry {
   type: "Hospital";
   discharge: Discharge;
 }
 
-interface OccupationalHealthcareEntry extends BaseEntry {
+export interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
   employerName: string;
   sickLeave?: SickLeave;

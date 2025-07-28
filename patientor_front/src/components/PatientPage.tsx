@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
-import type { Patient } from "../types";
+import type { Patient, Entry } from "../types";
 import { useState, useEffect } from "react";
 import Hospital from "./Entries/Hospital";
 import HealthCheck from "./Entries/HealthCheck";
@@ -21,6 +21,24 @@ const genderIcon = (gender: string) => {
       return null;
   }
 };
+
+const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
+  switch (entry.type) {
+    case "Hospital": {
+      return <Hospital entry={entry}></Hospital>;
+    }
+    case "OccupationalHealthcare": {
+      return <OccupationalHealthcare entry={entry}></OccupationalHealthcare>;
+    }
+    case "HealthCheck": {
+      return <HealthCheck entry={entry}></HealthCheck>;
+    }
+    default: {
+      return assertNever(entry);
+    }
+  }
+};
+
 const PatientPage = () => {
   const id = useParams().id;
   const [patient, setPatient] = useState<Patient | null>(null);
@@ -47,14 +65,25 @@ const PatientPage = () => {
         {patient.entries.length > 0 && (
           <div>
             <h3>entries</h3>
-            <Hospital patient={patient}></Hospital>
-            <HealthCheck patient={patient}></HealthCheck>
-            <OccupationalHealthcare patient={patient}></OccupationalHealthcare>
+            {patient.entries.map((entry: Entry) => (
+              <div
+                style={{
+                  border: "1px solid black",
+                  padding: "10px",
+                }}
+              >
+                <EntryDetails entry={entry} />
+              </div>
+            ))}
           </div>
         )}
       </div>
     );
   }
+};
+
+const assertNever = (entry: never): never => {
+  throw new Error(`Unhandled discriminated union member: ${entry}`);
 };
 
 export default PatientPage;

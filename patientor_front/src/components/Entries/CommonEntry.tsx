@@ -1,9 +1,9 @@
-import type { EntryListProp, Entry, Diagnosis } from "../../types";
+import type { EntryProp, Diagnosis } from "../../types";
 import service from "../../services/diagnosis";
 import { useEffect, useState } from "react";
 
-const CommonEntry = (props: EntryListProp) => {
-  const { patient } = props;
+const CommonEntry = (props: EntryProp) => {
+  const { entry } = props;
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
 
   useEffect(() => {
@@ -16,31 +16,26 @@ const CommonEntry = (props: EntryListProp) => {
 
   return (
     <div>
-      {patient.map((e: Entry) => (
-        <div key={e.id}>
-          <p>
-            {e.date} {e.description}
-          </p>
-          {e.diagnosisCodes && (
-            <ul>
-              {e.diagnosisCodes.map((d) => {
-                {
-                  const diagnosis = diagnoses.find(
-                    (i: Diagnosis) => d === i.code
+      <div key={entry.id}>
+        {entry.diagnosisCodes && (
+          <ul>
+            {entry.diagnosisCodes.map((d: string) => {
+              {
+                const diagnosis = diagnoses.find(
+                  (i: Diagnosis) => d === i.code
+                );
+                if (diagnosis) {
+                  return (
+                    <li key={d}>
+                      {d} {diagnosis.name}
+                    </li>
                   );
-                  if (diagnosis) {
-                    return (
-                      <li key={d}>
-                        {d} {diagnosis.name}
-                      </li>
-                    );
-                  }
                 }
-              })}
-            </ul>
-          )}
-        </div>
-      ))}
+              }
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
