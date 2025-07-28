@@ -5,6 +5,9 @@ import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 import type { Patient } from "../types";
 import { useState, useEffect } from "react";
+import Hospital from "./Entries/Hospital";
+import HealthCheck from "./Entries/HealthCheck";
+import OccupationalHealthcare from "./Entries/OccupationalHealthcare";
 
 const genderIcon = (gender: string) => {
   switch (gender) {
@@ -40,6 +43,15 @@ const PatientPage = () => {
         </h2>
         <p>ssn: {patient.ssn}</p>
         <p>occupation: {patient.occupation}</p>
+        <br />
+        {patient.entries.length > 0 && (
+          <div>
+            <h3>entries</h3>
+            <Hospital patient={patient}></Hospital>
+            <HealthCheck patient={patient}></HealthCheck>
+            <OccupationalHealthcare patient={patient}></OccupationalHealthcare>
+          </div>
+        )}
       </div>
     );
   }
